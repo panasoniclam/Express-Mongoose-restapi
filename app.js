@@ -22,8 +22,10 @@ mongoose.connect(
 //rout
 const note_route = require('./app/route/route.note');
 const system_route = require('./app/route/route.system');
+const session1_route = require('./app/route/route.session1')
 app.use('/note',note_route);
 app.use('/system',system_route)
+app.use('/session1',session1_route)
 app.use((req,res,next)=>{
     const err = new Error('not found');
     res.status = 404 ;
