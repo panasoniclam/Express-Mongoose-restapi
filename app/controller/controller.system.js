@@ -1,0 +1,93 @@
+const System = require('./../model/model.system')
+module.exports = {
+    findAll:(req,res,next)=>{
+        System.find()
+        .then(result=>{
+            res.status(200).json({
+                success:true,
+                result
+            })
+        })
+        .catch(err=>{
+            res.status(500).json({
+                success:false,
+                err
+            })
+        })
+    },
+    create:(req,res,next)=>{
+        if(!req.body.username){
+            res.status(500).json({
+                success:false
+            })
+        }
+        const system = new System({
+            username:req.body.username,
+            password:req.body.password,
+            email:req.body.email
+        })
+        system.save()
+        .then(result=>{
+            res.status(200).json({
+                success:true,
+                result
+            })
+        })
+        .catch(err=>{
+            res.status(500).json({
+                success:false,
+                err
+            })
+        })
+    },
+    findOne:(req,res,next)=>{
+        const id = req.params.systemId;
+        System.findById(id)
+        .then(result=>{
+            res.status(200).json({
+                success:true,
+                result
+            })
+        })
+        .catch(err=>{
+            res.status(500).json({
+                success:false,
+                err
+            })
+        })
+    },
+    remove:(req,res,next)=>{
+        const id = req.params.systemId;
+        System.findByIdAndRemove(id)
+        .then(result=>{
+            res.status(200).json({
+                success:true,
+            })
+        })
+        .catch(err=>{
+            res.status(500).json({
+                success:false,
+                err
+            })
+        })
+    },
+    edit:(req,res,next)=>{
+        let id = req.params.systemId ;
+        System.findByIdAndUpdate(id,{
+            username:req.body.username,
+            password:req.body.password,
+            email:req.body.email
+        },{new :true})
+        .then(result=>{
+            res.status(200).json({
+                success:true,
+            })
+        })
+        .catch(err=>{
+            res.status(500).json({
+                success:false,
+                err
+            })
+        })
+    }
+}
